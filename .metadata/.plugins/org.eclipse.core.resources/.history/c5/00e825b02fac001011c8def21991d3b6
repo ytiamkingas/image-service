@@ -1,0 +1,5 @@
+package com.image.service.service;
+
+public class CustomUserDetailsService {
+
+}

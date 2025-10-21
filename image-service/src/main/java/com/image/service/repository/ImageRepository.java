@@ -1,0 +1,15 @@
+package com.image.service.repository;
+
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.image.service.entity.Image;
+import com.image.service.entity.User;
+
+public interface ImageRepository extends JpaRepository<Image, Long> {
+	List<Image> findByUser(User user);
+	Page<Image> findByUser(User user, Pageable pageable);
+}

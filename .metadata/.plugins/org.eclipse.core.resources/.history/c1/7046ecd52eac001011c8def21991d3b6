@@ -1,0 +1,5 @@
+package com.image.service.security;
+
+public class JwtTokenProvider {
+
+}

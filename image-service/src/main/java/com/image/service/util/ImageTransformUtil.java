@@ -1,0 +1,49 @@
+package com.image.service.util;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import org.springframework.stereotype.Component;
+
+import net.coobird.thumbnailator.Thumbnails;
+
+@Component
+public class ImageTransformUtil {
+	public String transformImage(File inputFile,
+								 String outputPath,
+								 Integer resizeWidth,
+								 Integer resizeHeight,
+								 Double rotate,
+								 Boolean grayscale,
+								 String format) throws IOException {
+		BufferedImage img = ImageIO.read(inputFile);
+		Thumbnails.Builder<BufferedImage> builder = Thumbnails.of(img);
+		
+		if (resizeWidth != null && resizeHeight != null) {
+			builder.size(resizeWidth, resizeHeight);
+		} else {
+			builder.scale(1); // keep original size if not resizing
+		}
+		
+		if (rotate != null) {
+			builder.rotate(rotate);
+		}
+		
+		if (grayscale != null && grayscale) {
+			builder.imageType(BufferedImage.TYPE_BYTE_GRAY);
+		}
+		
+		if (format == null || format.isEmpty()) {
+			format = "jpg";
+		}
+		
+		File outputFile = new File(outputPath);
+		builder.outputFormat(format)
+				.toFile(outputFile);
+		
+		return outputFile.getAbsolutePath();
+	}
+}

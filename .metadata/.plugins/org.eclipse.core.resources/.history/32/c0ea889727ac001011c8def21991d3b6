@@ -1,0 +1,5 @@
+package com.image.service.dto;
+
+public class LoginRequest {
+
+}

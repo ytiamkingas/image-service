@@ -1,0 +1,45 @@
+package com.image.service.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.image.service.dto.LoginRequest;
+import com.image.service.dto.RegisterRequest;
+import com.image.service.entity.User;
+import com.image.service.repository.UserRepository;
+import com.image.service.security.JwtTokenProvider;
+
+@Service
+public class AuthService {
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
+	
+	public String register(RegisterRequest request) {
+		if (userRepository.findByUsername(request.getUsername()).isPresent()) {
+			throw new RuntimeException("Username already exists!");
+		}
+		
+		User user = User.builder()
+				.username(request.getUsername())
+				.password(passwordEncoder.encode(request.getPassword()))
+				.build();
+		
+		userRepository.save(user);
+		return jwtTokenProvider.generateToken(user.getUsername());
+	}
+	
+	public String login(LoginRequest request) {
+		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), 
+																					request.getPassword()));
+		return jwtTokenProvider.generateToken(request.getUsername());
+	}
+}

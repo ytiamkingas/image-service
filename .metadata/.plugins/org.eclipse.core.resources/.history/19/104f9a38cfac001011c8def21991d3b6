@@ -1,0 +1,13 @@
+spring.application.name=image-service
+
+spring.datasource.url=jdbc:h2:mem:image_service
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+spring.h2.console.enabled=true
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+jwt.secret=MyJwtSecretKeyForImageServiceIs12345149162518276412511681256625JaMeSbOnDasdf;lkjghvncmx,z./qwerpoiuty
+jwt.expiration=3600000

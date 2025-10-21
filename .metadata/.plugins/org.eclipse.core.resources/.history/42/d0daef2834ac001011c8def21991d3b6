@@ -1,0 +1,5 @@
+package com.image.service.controller;
+
+public class AuthController {
+
+}

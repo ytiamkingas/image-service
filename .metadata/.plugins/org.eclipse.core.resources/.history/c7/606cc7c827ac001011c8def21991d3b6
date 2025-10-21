@@ -1,0 +1,5 @@
+package com.image.service.repository;
+
+public class UserRepository {
+
+}

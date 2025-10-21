@@ -1,0 +1,5 @@
+package com.image.service.config;
+
+public class CacheConfig {
+
+}
